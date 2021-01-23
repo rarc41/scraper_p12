@@ -16,7 +16,7 @@ def parse_sections(link_section):
             # return links_to_news
             print(links_to_news)
         else:
-            raise ValueError(f'Error: {response_link_section.status_code}')
+            raise ValueError(f'Error en la request, status_code: {response_link_section.status_code}')
 
     except ValueError as ve:
         print(ve)
@@ -32,10 +32,9 @@ def parse_home_p12(url):
             links_to_sections =[section.get('href') for section in sections]
             # return links_to_sections
             # print(links_to_sections)
-            
+
             parse_sections(links_to_sections[0])
-            
-            
+
         else:
             raise ValueError(f'Error: {response_p12.status_code} ')
     except ValueError as ve:
