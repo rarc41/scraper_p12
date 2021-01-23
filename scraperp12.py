@@ -13,7 +13,8 @@ def parse_sections(link_section):
             # print(articles)
 
             links_to_news=[article.a.get('href') for article in articles]
-            return links_to_news
+            # return links_to_news
+            print(links_to_news)
         else:
             raise ValueError(f'Error: {response_link_section.status_code}')
 
@@ -29,16 +30,18 @@ def parse_home_p12(url):
 
             sections=html_home.find('div', attrs={'class':'p12-dropdown-content'}).find_all('a', attrs={'class':'p12-dropdown-item'})
             links_to_sections =[section.get('href') for section in sections]
-            return links_to_sections
+            # return links_to_sections
             # print(links_to_sections)
+            
+            parse_sections(links_to_sections[0])
+            
+            
         else:
             raise ValueError(f'Error: {response_p12.status_code} ')
     except ValueError as ve:
         print('ve')
 
 def run():
-    links_to_sections=parse_home_p12(URL)
-    links_news=parse_sections(links_to_sections[0])
-    print(links_news)
+    parse_home_p12(URL)
 if __name__ == '__main__':
     run()
