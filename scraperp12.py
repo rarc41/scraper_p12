@@ -20,22 +20,20 @@ def parse_notices(link_notice): #esta funcion extrae titulo, volanta, copete, co
             #si la noticia incluye una volanta, la extraemos
             try:
                 volanta=html_note.find('h2', attrs={'class':'article-prefix'}).text
-                if volanta:
-                    print(volanta)
-                else:
-                    raise Exception(f'error: esta nota no tiene una volanta')
+                print(volanta)
             except Exception as e:
+                print('Error: esta noticia no tiene volanta')
                 print(e)
+                print('\n')
 
             #si la noticia incluye un copete, lo extraemos
             try:
                 copete=html_note.find('div', attrs={'class':'article-summary'}).text
-                if copete:
-                    print(copete)
-                else:
-                    raise Exception(f'error: esta nota no tiene una volanta')
+                print(copete)
             except Exception as e:
+                print('Error: esta noticia no tiene copete')
                 print(e)
+                print('\n')
 
             body=html_note.find('div', attrs={'class':'article-text'}).get_text(' ')
             print(body)
@@ -45,8 +43,9 @@ def parse_notices(link_notice): #esta funcion extrae titulo, volanta, copete, co
                 author=html_note.find('div', attrs={'class':'article-author'}).a.text
                 print(author)
             except Exception as e:
+                print('Error: esta noticia no tiene un autor')
                 print(e)
-                print('\n')
+                
 
         else:
             raise Exception(f'{note.status_code}')
@@ -67,7 +66,7 @@ def parse_sections(link_section):
             links_to_news=[article.a.get('href') for article in articles]
             # return links_to_news
             print(links_to_news)
-
+            print('***********Extracion toda la info de la noticia********\n')
             parse_notices(links_to_news[0])
         else:
             raise ValueError(f'Error en la request, status_code: {response_link_section.status_code}')
@@ -86,7 +85,8 @@ def parse_home_p12(url):
             links_to_sections =[section.get('href') for section in sections]
             # return links_to_sections
             # print(links_to_sections)
-
+            
+            print('***********extrayendo los links de las noticias***********\n')
             parse_sections(links_to_sections[0])
 
         else:
