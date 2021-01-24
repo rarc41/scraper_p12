@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
+
 
 URL='https://www.pagina12.com.ar/'
 
@@ -93,9 +95,17 @@ def parse_home_p12(url):
 def run():
     links_to_sections=parse_home_p12(URL)
     # print(links_to_sections)
-    links_to_notices=parse_sections(links_to_sections[0])
-    # print(links_to_notices)
-    print(parse_notice(links_to_notices[2]))
+    links_to_notices=[parse_sections(link) for link in links_to_sections]
+    news=[]
+    for list_links in links_to_notices:
+        news.extend(list_links)
+    # print(news)
+    data=[]
+    for i, link_notice in enumerate(news):
+        print(f'Scraping nota{i}/{len(news)}')
+        data.append(parse_notice(link_notice))
+    df=pd.DataFrame(data)
+    df.to_csv('News Pagina12.csv')
     
 if __name__ == '__main__':
     run()
