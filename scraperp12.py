@@ -87,8 +87,8 @@ def parse_home_p12(url):
             links_to_sections =[section.get('href') for section in sections]
             # return links_to_sections
             # print(links_to_sections)
-            
-            print('***********extrayendo los links de las noticias***********\n')
+                        
+            print('\n***********extrayendo los links de las noticias***********\n')
             parse_sections(links_to_sections[0])
 
         else:
