@@ -11,16 +11,16 @@ def parse_notices(link_notice): #esta funcion extrae titulo, volanta, copete, co
             html_note=BeautifulSoup(note.text, 'lxml')
             #extraemos el titulo
             title=html_note.find('h1', attrs={'class':'article-title'}).text
-            print(title)
+            print(f'Titulo de la noticia: {title}')
 
             #extraemos la fecha del articulo
             fecha=html_note.find('span', attrs={'pubdate':'pubdate'}).get('datetime')
-            print(fecha)
+            print(f'Fecha de publicacion: {fecha}')
 
             #si la noticia incluye una volanta, la extraemos
             try:
                 volanta=html_note.find('h2', attrs={'class':'article-prefix'}).text
-                print(volanta)
+                print(f'Volanta: {volanta}')
             except Exception as e:
                 print('Error: esta noticia no tiene volanta')
                 print(e)
@@ -29,19 +29,20 @@ def parse_notices(link_notice): #esta funcion extrae titulo, volanta, copete, co
             #si la noticia incluye un copete, lo extraemos
             try:
                 copete=html_note.find('div', attrs={'class':'article-summary'}).text
-                print(copete)
+                print(f'Copete: {copete}')
             except Exception as e:
                 print('Error: esta noticia no tiene copete')
                 print(e)
                 print('\n')
 
             body=html_note.find('div', attrs={'class':'article-text'}).get_text(' ')
+            print('Contenidp de la noticia: ')
             print(body)
 
             #extraemos el author, si es que lo tiene
             try:
                 author=html_note.find('div', attrs={'class':'article-author'}).a.text
-                print(author)
+                print(f'Articulo escrito por: {author}')
             except Exception as e:
                 print('Error: esta noticia no tiene un autor')
                 print(e)
@@ -66,6 +67,7 @@ def parse_sections(link_section):
             links_to_news=[article.a.get('href') for article in articles]
             # return links_to_news
             print(links_to_news)
+            print('')
             print('***********Extracion toda la info de la noticia********\n')
             parse_notices(links_to_news[0])
         else:
